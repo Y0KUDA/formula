@@ -1,110 +1,36 @@
 #include <iostream>
-#include <string>
-#include <functional>
-#include <vector>
+#include "Formula.hpp"
+using std::cout;
 
-using std::string;
-using std::vector;
-
-class formula
+int main(int argc, char *argv[])
 {
-public:
-    formula(string s_formula) : m_formula(s_formula)
+    auto result = Formula::eval(argv[1]);
+    switch (result.first)
     {
-        s_formula = this->m_formula;
-    }
-    string eval()
-    {
-        return m_formula;
-    }
-
-private:
-    string m_formula;
-
-    bool has_not_accepted_character(string formula)
-    {
-        for (int i = 0; i < formula.length(); i++)
-        {
-            if (formula[i] != '*' ||
-                formula[i] != '/' ||
-                formula[i] != '+' ||
-                formula[i] != '-' ||
-                formula[i] != '(' ||
-                formula[i] != ')' ||
-                formula[i] != ' ' ||
-                (formula[i] >= '0' && formula[i] <= '9'))
-            {
-                continue;
-            }
-            return true;
-        }
-        return false;
+    case Formula::Status::CHARACTER_ERROR:
+        cout << "使用不可な文字が使われています。" << std::endl;
+        break;
+    case Formula::Status::NUMBER_ERROR:
+        cout << "不正な数が使われています。" << std::endl;
+        break;
+    case Formula::Status::SIGN_ERROR:
+        cout << "符号が2つ以上並んでいます。" << std::endl;
+        break;
+    case Formula::Status::PARSER_ERROR:
+        cout << "構文が間違っています。" << std::endl;
+        break;
+    case Formula::Status::ZERO_DIV:
+        cout << "0除算が存在します。" << std::endl;
+        break;
+    case Formula::Status::UNKNOWN_ERROR:
+        cout << "不明なエラーが発生しました。" << std::endl;
+        break;
+    case Formula::Status::SUCCESS:
+        cout << result.second << std::endl;
+        break;
+    default:
+        break;
     }
 
-    vector<string> split(string formula)
-    {
-        vector<string> v_formula;
-        for (int i = 0; i < formula.length(); i++)
-        {
-            if (formula[i] != ' ')
-            {
-                continue;
-            }
-            else if (formula[i] != '*' ||
-                     formula[i] != '/' ||
-                     formula[i] != '+' ||
-                     formula[i] != '-' ||
-                     formula[i] != '(' ||
-                     formula[i] != ')')
-            {
-                v_formula.push_back(string{formula[i]});
-            }
-            else if (formula[i] >= '0' && formula[i] <= '9')
-            {
-                for (int j = 0; j < formula.length(); j++)
-                {
-                    if (formula[j] != '*' ||
-                        formula[j] != '/' ||
-                        formula[j] != '+' ||
-                        formula[j] != '-' ||
-                        formula[j] != '(' ||
-                        formula[j] != ')' ||
-                        formula[j] != ' ' ||
-                        formula[j] != '\0')
-                    {
-                        v_formula.push_back(formula.substr(i, j - i - 1));
-                        break;
-                    }
-                }
-            }
-        }
-        return v_formula;
-    }
-
-    bool has_invalid_mumber(vector<string> v_formula)
-    {
-        for (auto &str : v_formula)
-        {
-            if (str[0] >= '0' && str[0] <= '9')
-            {
-                if (str.length() > 8)
-                {
-                    return true;
-                }
-                if (str.length() > 1 &&
-                    str[0] == '0')
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-};
-
-int main()
-{
-    std::string str = "abcd";
-    std::cout << str.length();
     return 0;
 }
