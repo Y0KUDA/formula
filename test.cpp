@@ -222,7 +222,7 @@ int main(void)
         AreEqual<pair<Formula::Status,double>>("Formula::eval 7")(Formula::eval("4+3-+4"),{Formula::Status::SUCCESS,4+3-+4});
         AreEqual<pair<Formula::Status,double>>("Formula::eval 7")(Formula::eval("3--4+-3"),{Formula::Status::SUCCESS,3+4-3});
         AreEqual<pair<Formula::Status,double>>("Formula::eval 7")(Formula::eval("-1*-4+-3"),{Formula::Status::SUCCESS,-1*-4+-3});
-        AreEqual<pair<Formula::Status,double>>("Formula::eval 7")(Formula::eval("(-(-(-(3*-(4*4)*(4+4)+(3))*-(4/3))*4/3*(-4--4)))"),{Formula::Status::SUCCESS,(-(-(-(3.0*-(4.0*4.0)*(4.0+4.0)+(3.0))*-(4.0/3.0))*4.0/3.0*(-4.0+4.0)))});
+        AreEqual<pair<Formula::Status,double>>("Formula::eval 7")(Formula::eval("(-(-(-(3*-(4*4)*(4+4)+(3))*-(4/3))*4/3*(-4--41)))"),{Formula::Status::SUCCESS,(-(-(-(3.0*-(4.0*4.0)*(4.0+4.0)+(3.0))*-(4.0/3.0))*4.0/3.0*(-4.0+41.0)))});
 
         AreEqual<Formula::Status>("Formula::eval 8")(Formula::eval("aaa+222").first,Formula::Status::CHARACTER_ERROR);
         AreEqual<Formula::Status>("Formula::eval 9")(Formula::eval("111111111").first,Formula::Status::NUMBER_ERROR);

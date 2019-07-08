@@ -2,6 +2,18 @@ all: evalf
 
 evalf: eval_formula.cpp Formula.hpp
 	g++ $< -O2 -o $@
+	##################
+	#### examples ####
+	##################
+	./$@ "3+3"
+	./$@ "-(4-5/2)"
+	./$@ "4*-3"
+	##################
+	
+	##################
+	##### README #####
+	##################
+	cat README.md
 
 .PHONY: test
 test: unit_test.log
