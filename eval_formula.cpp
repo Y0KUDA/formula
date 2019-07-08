@@ -4,6 +4,11 @@ using std::cout;
 
 int main(int argc, char *argv[])
 {
+    if (argc < 2)
+    {
+        cout << "引数がありません。" << std::endl;
+        return 0;
+    }
     auto result = Formula::eval(argv[1]);
     switch (result.first)
     {
